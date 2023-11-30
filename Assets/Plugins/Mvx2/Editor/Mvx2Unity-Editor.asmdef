@@ -1,0 +1,17 @@
+{
+    "name": "Mvx2Unity-Editor",
+    "references": [
+        "GUID:76d99307b37b4c146a5d8468b0e7d065"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,15 @@
+{
+    "name": "Mvx2Unity",
+    "references": [
+        "GUID:1fc69d160eafe774ab0a8e5191500311"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

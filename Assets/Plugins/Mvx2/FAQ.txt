@@ -1,0 +1,46 @@
+#1 Where to find documentation for Mvx2Unity, for its extensions and for included Mvx2 framework and plugins?
+
+  - this FAQ text file: 
+    - `/Assets/Plugins/Mvx2/FAQ.txt`
+  - comprehensive documentation for the plugin and all associated subproducts:
+    - `/Assets/Plugins/Mvx2/doc/{product}.pdf`
+    - `/Assets/Plugins/Mvx2/doc/{product}.zip` (compressed html format)
+  - primary plugin documentation:
+    - `/Assets/Plugins/Mvx2/doc/Mvx2Unity.pdf`
+    - `/Assets/Plugins/Mvx2/doc/Mvx2Unity.zip` (compressed html format)
+
+#2 Where to find sample scenes and associated assets (e.g. sample stream definitions and data decompressors)?
+
+  - `/Assets/Plugins/Mvx2/Scenes/{sample scene}.unity`
+  - `/Assets/Plugins/Mvx2/Scenes/{sample stream definition}.asset`
+
+#3 How to change a stream source file?
+
+  1. Determine a stream source definition asset by checking a `Data stream definition` field of a stream component in the scene,
+    1a. e.g. in the `Mvx2BasicSample.scene`, check `MvxSimpleDataStream` component attached to `DataStream` object,
+    1b. its `Data stream definition` field references a stream definition asset located at `/Assets/Plugins/Mvx2/Scenes/FileDataStreamDefinition.asset`.
+  2. If the stream source definition is a file stream definition, it contains a `File path` field where the path to a source file can be changed,
+    2a. the field accepts not only absolute file paths, but also paths relative to standard `StreamingAssets` Unity folder - to specify these files drag & drop a StreamingAssets file inside the Unity editor.
+  3. For further information about stream source definitions check the comprehensive documentation (there are also other stream source definition types available than those for specifying files).
+
+#4 How to attach decompressors to the stream?
+
+  A support for decompressors is implemented in a generic way to all stream playback implementations (i.e. derivatives of `MvxDataStream`):
+    - data decompressors are implemented as standalone asset files
+      - e.g. `/Assets/Plugins/Mvx2/Scenes/DataAutoDecompressor.asset`,
+    - there is a `Data decompressors` field present in `MvxDataStream` components, which holds a list of decompressor assets to attach,
+    - add or remove decompressor assets referenced by the field, as required.
+  
+#5 How is support for audio playback implemented?
+
+  There are 2 independent implementations of audio playback support:
+    - simple, which is based on asynchronous frames processing
+      - `MvxAudioAsyncPlayer` derivative of `MvxAsyncDataProcessor`
+      - frames are checked for presence of audio data and those are extracted and filled into a native audio player,
+      - the audio playback may not be fluent, depending on the playback speed, its smoothness, and distribution of audio data to individual frames,
+      - most sample scenes only contain this implementation.
+    - advanced, in which the audio data themselves control the playback of the whole stream ('audio channel is the master'),
+      - `MvxAudioPlayerStream` derivative of `MvxDataStream`
+      - frames are pre-processed and pre-checked for audio data presence, and cached in such a way, to allow fluent audio playback,
+      - whenever the audio playback reaches a part of audio data present in a certain frame, this frame is released for further processing to the stream,
+      - `/Assets/Plugins/Mvx2/Scenes/Mvx2AudioPlayerStreamSample.unity` sample scene showcases this implementation.
